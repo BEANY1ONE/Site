@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Cadastro</title>
+
+    <script src="./js/sessao.js"></script>
+    <link rel="stylesheet" href="./css/estilo.css" />
+    <link rel="icon" href="./assets/Logo/Logo_FundoAmarelo.png" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+  </head>
+
+  <body onload="listar()">
+    <div class="cadastro">
+      <div style="display: none;" class="alerta_erro" id="alertaErro">
+        <div style="display: block;" class="card_erro" id="cardErro">
+          <h1>Mensagem de Erro</h1> <br>
+          <p id="mensagem_erro">Esses inputs</p>
+          <button onclick="voltar()">Voltar</button>
+      </div>
+      </div>
+      <div class="container">
+        <div class="card-cadastro">
+          <img
+            class="logo-container"
+            src="./assets/Logo/LogoBEANY1_FundoBranco.png"
+            alt=""
+          />
+          <div class="formulario">
+            <h1 style="text-align: center;">CADASTRO</h1>
+            <div class="campo">
+              <span><b style="color: red;">*</b> Nome de Usuário:</span> <br>
+              <input
+                id="username_input"
+                type="text"
+                placeholder="Insira aqui seu código"
+              />
+            </div>
+            <div class="campo">
+              <span><b style="color: red;">*</b> Nome:</span> <br>
+              <input id="nome_input" type="text" placeholder="Insira seu Nome" />
+            </div>
+            <div class="campo">
+              <span><b>*</b> ID do Jogador:</span> <br>
+              <input id="ipt_idJogador" type="text" placeholder="Insira seu ID" />
+            </div>
+            <div class="campo">
+              <span><b style="color: red;">*</b> E-mail:</span> <br>
+              <input
+                id="email_input"
+                type="text"
+                placeholder="guest123@gmail.com"
+              />
+            </div>
+            <div class="campo">
+              <span><b style="color: red;">*</b> Senha:</span> <br>
+              <input id="senha_input" type="password" placeholder="******"/>
+            </div> <br>
+            <button class="botao" onclick="cadastrar()">CADASTRAR</button>
+            <div class="botao-abaixo">
+              <a href="./index.html">Voltar</a>
+              <a href="./login.html">Já Possui uma Conta?</a>
+            </div>
+          </div>
+          <div style="display: none" id="div_aguardar" class="loading-div">
+            <img src="./assets/tela-loading.gif" id="loading-gif" />
+          </div>
+        </div>
+        <div class="card-cadastro-img"></div>
+      </div>
+      <div id="div_erros_cadastro"></div>
+    </div>
+  </body>
+</html>
+
+<script>
+  // Array para armazenar empresas cadastradas para validação de código de ativação
+  let listaEmpresasCadastradas = [];
+
+  function voltar() {
+    alertaErro.style.display = "none";
+  }
+
+  function cadastrar() {
+    // aguardar();
+
+    //Recupere o valor da nova input pelo nome do id
+    // Agora vá para o método fetch logo abaixo
+    var nomeVar = nome_input.value;
+    var emailVar = email_input.value;
+    var senhaVar = senha_input.value;
+    var idJogador = ipt_idJogador.value;
+    var codigoVar = username_input.value;
+    var idEmpresaVincular;
+
+    var msg = `Os seguintes campos estão Vazios:<br><br>`;
+
+    // Verificando se há algum campo em branco
+    if (
+      nomeVar == "" ||
+      emailVar == "" ||
+      senhaVar == "" ||
+      idJogador == "" ||
+      codigoVar == ""
+    ) {
+      if (codigoVar == "") {
+        msg += "Código. "
+      } if (emailVar == "") {
+        msg += "Email. "
+      } if (senhaVar == "") {
+        msg += "Senha. "
+      } if (idJogador == "") {
+        msg += "ID do Jogador. "
+      }
+      
+      mensagem_erro.innerHTML = msg;
+
+      cardErro.style.display = "block";
+      alertaErro.style.display = "flex";
+
+      finalizarAguardar();
+      return false;
+    } else {
+      setInterval(sumirMensagem, 5000);
+    }
+
+    // Verificando se o código de ativação é de alguma empresa cadastrada
+    for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
+      if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
+        idEmpresaVincular = listaEmpresasCadastradas[i].id;
+        console.log("Código de ativação válido.");
+        break;
+      } else {
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
+        finalizarAguardar();
+      }
+    }
+
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        nomeServer: nomeVar,
+        emailServer: emailVar,
+        senhaServer: senhaVar,
+        idEmpresaVincularServer: idEmpresaVincular,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          cardErro.style.display = "block";
+
+          mensagem_erro.innerHTML =
+            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+          setTimeout(() => {
+            window.location = "login.html";
+          }, "2000");
+
+          limparFormulario();
+          finalizarAguardar();
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+        finalizarAguardar();
+      });
+
+    return false;
+  }
+
+  // Listando empresas cadastradas
+  function listar() {
+    fetch("/empresas/listar", {
+      method: "GET",
+    })
+      .then(function (resposta) {
+        resposta.json().then((empresas) => {
+          empresas.forEach((empresa) => {
+            listaEmpresasCadastradas.push(empresa);
+
+            console.log("listaEmpresasCadastradas");
+            console.log(listaEmpresasCadastradas[0].codigo_ativacao);
+          });
+        });
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+  }
+
+  function sumirMensagem() {
+    cardErro.style.display = "none";
+  }
+</script>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BEANY1 | Home</title>
+    <link
+      rel="shortcut icon"
+      href="./assets/Logo/Logo_FundoAmarelo.png"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="css/estilo.css" />
+  </head>
+  <body>
+    <!-- __________________________ -->
+     <!-- Pop Ups -->
+      <div class="pop-up" id="popup1" style="display: none;">
+        <div class="pop-up-conteudo">
+          <h1>DeadEye - Anti-Cheat</h1> <br>
+          <img style="width: 60px; align-self: center; margin: 20px;" src="./assets/BannerIcons/eyedect-logo.png" alt="logo_deadeye">
+          <p>O Deadeye é o sistema anti-cheat oficial do Rainbow Six Siege, desenvolvido para detectar e impedir o uso de programas externos que oferecem vantagens injustas. Ele monitora o comportamento dos jogadores em tempo real e identifica padrões suspeitos, garantindo partidas mais limpas, competitivas e equilibradas. Com atualizações constantes, o Deadeye é uma das principais ferramentas que mantêm o ambiente do Siege seguro, reduzindo hacks como aim assist ilegal, wallhack e macro abusivo.</p>
+          <button onclick="fecharPopUp()">Fechar</button>
+        </div>
+      </div>
+
+      <div class="pop-up" id="popup2" style="display: none;">
+        <div class="pop-up-conteudo">
+          <h1>Xbox - Console</h1> <br>
+          <img style="width: 60px; align-self: center; margin: 20px;" src="./assets/BannerIcons/Xbox_one_logo.svg 1.png" alt="logo_xbox">
+          <p>O Xbox é uma das plataformas onde Rainbow Six Siege sempre teve uma comunidade extremamente ativa. O jogo foi otimizado ao longo dos anos para consoles como o Xbox One, Series S e Series X, oferecendo partidas estáveis, suporte a crossplay entre consoles e uma experiência fluida para jogadores que preferem controle ao invés de teclado e mouse. Além disso, o ambiente competitivo no Xbox é bem forte, com torneios amadores e profissionais acontecendo com frequência.</p>
+          <button onclick="fecharPopUp()">Fechar</button>
+        </div>
+      </div>
+
+      <div class="pop-up" id="popup3" style="display: none;">
+        <div class="pop-up-conteudo">
+          <h1>Ubisoft - Criadora</h1> <br>
+          <img style="width: 60px; align-self: center; margin: 20px;" src="./assets/BannerIcons/ubisoft-logo.png" alt="logo_ubisoft">
+          <p>A Ubisoft é a desenvolvedora e publicadora de Tom Clancy’s Rainbow Six Siege. Responsável pelo gerenciamento do jogo, criação de temporadas, operadores, mapas, eventos e todo o ecossistema competitivo, a empresa mantém o título vivo há quase uma década. A Ubisoft Montreal é o estúdio por trás do gameplay tático, enquanto outros estúdios auxiliares contribuem com atualizações, balanceamento e melhorias constantes, mantendo Siege como um dos FPS táticos mais influentes do mundo.</p>
+          <button onclick="fecharPopUp()">Fechar</button>
+        </div>
+      </div>
+
+      <div class="pop-up" id="popup4" style="display: none;">
+        <div class="pop-up-conteudo">
+          <h1>PlayStation - Console</h1> <br>
+          <img style="width: 60px; align-self: center; margin: 20px;" src="./assets/BannerIcons/PS-logo.png" alt="logo_ps">
+          <p>O PlayStation também é uma das plataformas principais de Rainbow Six Siege. Com suporte em consoles como PS4 e PS5, o jogo oferece crossplay entre consoles, servidores estáveis e grande comunidade ativa. Muitos jogadores profissionais e criadores de conteúdo jogam no PlayStation, fortalecendo ainda mais o lado competitivo. A versão para PS5 ainda traz melhorias visuais e desempenho aprimorado, deixando a experiência mais fluida e responsiva.</p>
+          <button onclick="fecharPopUp()">Fechar</button>
+        </div>
+      </div>
+
+      <!-- _______________________ -->
+
+    <div class="header">
+      <img src="./assets/Logo/Logo_FundoAmarelo.png" alt="logo_png" />
+      <h1> <a href="index.html" style="text-decoration: none; color: inherit;">Home</a></h1>
+      <h1> <a href="#sobre-nos" style="text-decoration: none; color: inherit;">Sobre</a></h1>
+      <h1> <a href="#contato" style="text-decoration: none; color: inherit;">Contato</a></h1>
+      <div class="cadastroLogin">
+        <h1><a href="login.html" style="text-decoration: none; color: inherit;">Login</a></h1>
+        <button onclick="irCadastro()">CADASTRO</button>
+      </div>
+    </div>
+
+    <!-- __________________________ -->
+    <!-- Banner -->
+
+    <div class="banner">
+      <div class="colaboradores">
+        <hr width="90%" />
+        <br />
+        <div class="banner-imgs">
+          <img
+          onclick="deadeyePop()"
+            width="60px"
+            src="./assets/BannerIcons/eyedect-logo.png"
+            alt="logo_empresa1"
+          />
+          <img
+          onclick="xboxPop()"
+            width="60px"
+            src="./assets/BannerIcons/Xbox_one_logo.svg 1.png"
+            alt="logo_empresa2"
+          />
+          <img
+          onclick="ubisoftPop()"
+            width="60px"
+            src="./assets/BannerIcons/ubisoft-logo.png"
+            alt="logo_empresa3"
+          />
+          <img
+          onclick="psPop()"
+            width="60px"
+            src="./assets/BannerIcons/PS-logo.png"
+            alt="logo_empresa4"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- __________________________ -->
+    <!-- Informativos -->
+
+    <div class="informativos">
+      <h1>TOM CLANCY'S RAINBOW SIX SIEGE</h1>
+
+      <div class="informacao">
+        <img src="./assets/R6_banner.png" alt="imgR6" />
+        <p>
+          Rainbow Six Siege é um jogo desenvolvido pela empresa Ubisoft,
+          pertencente ao gênero FPS (First Person Shooter). O título coloca os
+          jogadores em combates táticos que simulam confrontos entre equipes de
+          Agentes Operacionais altamente treinados e terroristas. Cada partida
+          segue o formato 5v5, onde estratégia, comunicação e precisão são
+          essenciais para a vitória. O jogo se destaca por seu ritmo frenético,
+          mapas destrutíveis e a necessidade constante de adaptação, criando uma
+          experiência competitiva única e profundamente estratégica.
+        </p>
+      </div>
+    </div>
+
+    <!-- ___________________________ -->
+    <!-- Sobre mim -->
+
+    <div class="sobre-mim">
+      <img class="persona" src="./assets/RichardPNG.png" alt="dono_png" />
+      <div class="sobre-mim-caixa">
+        <h1 id="sobre-nos">SOBRE EU | O PROJETO</h1>
+        <p>
+          Sobre minha vida com relação ao mundo dos jogos, admiro e jogo desde
+          os meus 10 anos, onde foi a época cujo mais comecei a me aprofundar
+          nisso e conversar com pessoas online. Conforme o tempo foi passando,
+          comecei a desenvolver um apreço enorme, onde então, quando ganhei um
+          dos consoles que mais joguei <b>(Xbox One)</b>, foi quando comecei a
+          jogar esse jogo <b>(Tom Clancy's Rainbow Six Siege)</b>, a qual se
+          solidificou como um dos melhores da época quando joguei. Foi por lá
+          onde conheci diversos amigos que me acompanham até hoje, sem contar o
+          fato de ter me ajudado em momentos difíceis. <br /><br />
+          Agora mesmo que eu não jogue mais ou não tenha um Videogame por agora,
+          não vou me esquecer dos momentos e amigos que me trouxe com ele, como
+          <b
+            >Jhemerson, William, Vinicius, Lucas, Gabriel, Bruno, Marcos e
+            outros</b
+          >
+          que fizeram parte da minha jornada e me apoiam até hoje.
+        </p>
+        <img class="sobre-mim-img" src="./assets/sobre-mim-img.jpg" alt="" />
+        <br />
+        <p>
+          Com esse Projeto Individual, tive como ideia usar o principal jogo que
+          me carregou e ajudou nos momentos difíceis (e me fez conhecer pessoas
+          importantes) aqui. O Site visa não só trazer ao usuário a experiência
+          de uma pequena e boa parte do que passei aqui como também, permitir
+          aos usuários que já jogaram, visualizar suas <b>Estatísticas</b> de
+          Partidas e terem uma noção em pontos a melhorar!
+        </p>
+      </div>
+    </div>
+
+    <!-- __________________________ -->
+    <!-- Footer -->
+
+    <footer>
+      <div class="footer-info1">
+        <h1 id="contato">Contato</h1>
+        <hr width="100%">
+        <p><b>Email:</b> beany1@gmail.com</p>
+        <p><b>Tel:</b> (11) 94245-6563</p>
+      </div>
+      <div class="footer-info2">
+        <h1>Made By</h1>
+        <hr width="100%">
+        <p>Richard D. Araújo</p>
+        <p>SPTech</p>
+      </div>
+      <div class="footer-info3">
+        <h1>Redes Sociais</h1>
+        <hr width="100%">
+        <img src="./assets/Logo/Instagram_icon.png" alt="logo-instagram" />
+      </div>
+    </footer>
+  </body>
+</html>
+
+<script>
+
+  function xboxPop() {
+  popup2.style.display = "flex"
+  }
+
+  function psPop() {
+    popup4.style.display = "flex"
+  }
+
+  function ubisoftPop() {
+    popup3.style.display = "flex"
+  }
+
+
+  function deadeyePop() {
+    popup1.style.display = "flex"
+  }
+
+  function fecharPopUp() {
+    popup1.style.display = "none"
+    popup2.style.display = "none"
+    popup3.style.display = "none"
+    popup4.style.display = "none"
+  }
+
+  function irCadastro() {
+    window.location.href = "cadastro.html"
+  }
+</script>

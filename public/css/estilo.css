@@ -1,0 +1,490 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Cossette+Titre:wght@400;700&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Jomhuria&family=Joti+One&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=M+PLUS+Rounded+1c&family=Oswald:wght@200..700&family=Quicksand:wght@300..700&display=swap');
+
+body {
+    margin: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Página de Home */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(0, 0, 0);
+    padding: 5px 20px;
+}
+
+.header .cadastroLogin {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 42px;
+}
+
+.header h1 {
+    font-family: 'Oswald', 'Lobster Two', 'Cossette Titre';
+    color: white;
+    font-size: 28px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.header h1:hover {
+    color: #D9A303;
+    transform: scale(1.1);
+}
+
+.header button {
+    font-family: 'Oswald', 'Lobster Two', 'Cossette Titre';
+    background-color: #D9A303;
+    font-size: 26px;
+    font-weight: 800;
+    max-height: 60px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.header button:hover {
+    color: white;
+    background-color: #D9A303;
+    transform: scale(1.05);
+}
+
+.header img {
+    max-width: 60px;
+    max-height: 80px;
+    transition: all 0.3s ease;
+}
+
+.header img:hover {
+    filter: brightness(5);
+}
+
+/* ____BANNER_____ */
+
+.banner {
+    background-image: url(../assets/BannerHome2.png);
+    margin: 0;
+    height: 625px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.banner .colaboradores {
+    background-color: rgba(0, 0, 0, 0.750);
+    width: 100%;
+    padding: 12px;
+    position: relative;
+}
+
+.banner-imgs {
+    display: flex;
+    justify-content: space-between;
+}
+
+.banner-imgs img {
+    height: max-content;
+    filter: grayscale(100);
+    cursor: pointer;
+    padding: 12px 6px;
+    transition: all 0.5s ease;
+}
+
+.banner-imgs img:hover {
+    filter: grayscale(0);
+    transform: scale(1.05);
+}
+
+/* __________________________________ */
+/* Informativos */
+
+.informativos {
+    margin: 0;
+    background-image: url(../assets/wave-2.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 16px 6px
+}
+
+.informativos h1 {
+    color: white;
+    font-family: 'JetBrains Mono';
+    font-size: 46px;
+    font-weight: 800;
+    margin: 0;
+    margin-left: 40px;
+
+    text-shadow: -3px 3px 10px white;
+}
+
+.informativos img {
+    max-width: 460px;
+    border-radius: 12px;
+    transition: all 0.6s ease;
+}
+
+.informativos img:hover {
+    box-shadow: 0 0 20px white;
+}
+
+.informativos .informacao {
+    display: flex;
+    justify-content: space-around;
+    gap: 100px;
+}
+
+.informacao {
+    margin: 50px 0px;
+    align-items: center;
+}
+
+.informacao p {
+    max-width: 600px;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 24px;
+    text-align: center;
+}
+
+/* ___________________ */
+/* ____SOBRE MIM______ */
+
+.sobre-mim {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 300px 20px 100px 20px; /* Cima, Esquerda, Baixo, Direita*/
+}
+
+.persona {
+    position: absolute;
+    z-index: 1;
+    max-width: 300px;
+    object-fit: cover;
+    
+    bottom: -1100px;
+}
+
+.sobre-mim-caixa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 30px 30px;
+    border-radius: 12px;
+    border: double black 6px;
+    font-family: 'JetBrains Mono';
+
+    position: relative;
+    z-index: 2;
+    background-color: #D9A303;
+    box-shadow: 0 5px 20px black;
+    max-width: 80%;
+}
+
+.sobre-mim-caixa h1 {
+    font-size: 46px;
+    font-weight: 800;
+}
+
+.sobre-mim-caixa p {
+    font-size: 22px;
+    max-width: 900px;
+}
+
+.sobre-mim-img {
+    max-width: 600px;
+    margin: 20px;
+    border-radius: 6px;
+    box-shadow: 0 0 10px black;
+    transition: all 0.5s ease;
+}
+
+.sobre-mim-img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px white;
+}
+/* _______________ */
+/* Footer */
+
+footer {
+    background-color: black;
+    color: white;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 40px;
+}
+
+footer h1 {
+    font-family: 'Oswald';
+    font-size: 32px;
+    text-shadow: -2px 2px 8px white;
+}
+
+footer p {
+    font-family: 'M PLUS Rounded 1c';
+    font-size: 16px;
+}
+
+.footer-info1, .footer-info2, .footer-info3 {
+    align-items: center;
+    text-align: center;
+}
+
+.footer-info3 img {
+    max-width: 40px;
+    cursor: pointer;
+    filter: brightness(0.75);
+    transition: all 0.3s ease;
+}
+
+.footer-info3 img:hover {
+    filter: brightness(1);
+    transform: scale(1.05);
+}
+
+/* _______________________ */
+/* _____POP UP ____________ */
+
+.pop-up {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.pop-up-conteudo {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    max-width: 60%;
+    padding: 30px 10px;
+    background-color: white;
+}
+
+.pop-up-conteudo h1 {
+    font-family: 'Oswald';
+    margin: 0;
+}
+
+.pop-up-conteudo p {
+    max-width: 80%;
+    align-self: center;
+    font-family: 'Inter';
+}
+
+.pop-up-conteudo button {
+    align-self: center;
+    cursor: pointer;
+    width: 100px;
+    font-family: 'Oswald';
+    font-size: 20px;
+    font-weight: 700;
+    background-color: #D9A303;
+    color: black;
+    border: 1px solid black;
+    box-shadow: -3px 3px 10px black;
+
+    transition: all 0.5s ease;
+}
+
+.pop-up-conteudo button:hover {
+    transform: scale(1.05);
+    background-color: #b48801;
+}
+
+/* __________________ */
+/* Cadastro */
+
+.cadastro {
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+    background-color: rgb(48, 48, 48);
+
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+}
+
+.card-cadastro {
+order: 1;
+width: 100%;
+height: 100vh;
+background-color: white;
+
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.card-cadastro img {
+    margin: 10px 0px 40px 0px;
+    width: 200px;
+}
+
+.card-cadastro h1 {
+    margin: 0;
+    margin-bottom: 10px;
+    font-family: 'Joti One';
+}
+
+.card-cadastro span {
+    font-family: 'Jomhuria';
+    font-size: 24px;
+    font-weight: 100;
+}
+
+.logo-container {
+    width: 50vh;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #D9D9D9;
+    max-width: 300px;
+    max-height: 500px;
+    /* width: 100%; */
+
+    padding: 20px 50px;
+}
+
+.formulario a {
+    font-family: 'Hanken Grotesk';
+    text-decoration: none;
+    color: black;
+
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.formulario a:hover {
+    transform: scale(1.04);
+    text-decoration: underline;
+}
+
+.botao {
+    background-color: #D9A303;
+    color: black;
+    font-family: 'Jomhuria';
+    font-size: 32px;
+
+    text-align: center;
+    border: none;
+    width: 100%;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.botao:hover {
+    background-color: #b48801;
+}
+
+.botao-abaixo {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    /* gap: 30px; */
+}
+
+.card-cadastro-img {
+    order: 2;
+    max-width: 50%;
+    width: 100%;
+    height: 100vh;
+    background-image: url(../assets/background-home2.png);
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+}
+
+.campo {
+    margin: 2px 0px;
+}
+
+.campo input {
+    border: none;
+    padding: 6px;
+    border-radius: 6px;
+}
+
+.campo input:focus {
+    outline: none;
+}
+
+/* Card de Erro */
+.alerta_erro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.6);
+
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+.card_erro {
+    display: flex;
+    text-align: center;
+    position: fixed;
+    
+    background-color: #D9D9D9;
+    padding: 20px 10px 20px 10px;
+
+}
+
+.card_erro h1 {
+    margin: 0;
+}
+
+.card_erro p {
+    font-family: 'Hanken Grotesk';
+}
+
+.card_erro button {
+    background-color: #D9A303;
+    color: black;
+    font-family: 'Jomhuria';
+    font-size: 32px;
+
+    text-align: center;
+    border: none;
+    padding: 5px 30px;
+    margin-top: 6px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.card_erro button:hover {
+    background-color: #b48801;
+}
