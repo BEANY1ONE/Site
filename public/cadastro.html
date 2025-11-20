@@ -44,7 +44,7 @@
               <input id="nome_input" type="text" placeholder="Insira seu Nome" />
             </div>
             <div class="campo">
-              <span><b>*</b> ID do Jogador:</span> <br>
+              <span><b style="color: red;">*</b> ID do Jogador:</span> <br>
               <input id="ipt_idJogador" type="text" placeholder="Insira seu ID" />
             </div>
             <div class="campo">
@@ -92,8 +92,8 @@
     var nomeVar = nome_input.value;
     var emailVar = email_input.value;
     var senhaVar = senha_input.value;
-    var idJogador = ipt_idJogador.value;
-    var codigoVar = username_input.value;
+    var idJogadorVar = ipt_idJogador.value;
+    var usernameVar = username_input.value;
     var idEmpresaVincular;
 
     var msg = `Os seguintes campos estão Vazios:<br><br>`;
@@ -103,19 +103,21 @@
       nomeVar == "" ||
       emailVar == "" ||
       senhaVar == "" ||
-      idJogador == "" ||
-      codigoVar == ""
+      idJogadorVar == "" ||
+      usernameVar == ""
     ) {
-      if (codigoVar == "") {
-        msg += "Código. "
+      if (usernameVar == "") {
+      msg += "Nome de Usuário. "
+      } if (nomeVar == "") {
+        msg += "Nome. "
+      } if (idJogadorVar == "") {
+        msg += "ID do Jogador. "
       } if (emailVar == "") {
         msg += "Email. "
       } if (senhaVar == "") {
         msg += "Senha. "
-      } if (idJogador == "") {
-        msg += "ID do Jogador. "
-      }
-      
+      } 
+
       mensagem_erro.innerHTML = msg;
 
       cardErro.style.display = "block";
@@ -129,7 +131,7 @@
 
     // Verificando se o código de ativação é de alguma empresa cadastrada
     for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-      if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
+      if (listaEmpresasCadastradas[i].codigo_ativacao == usernameVar) {
         idEmpresaVincular = listaEmpresasCadastradas[i].id;
         console.log("Código de ativação válido.");
         break;
@@ -203,6 +205,7 @@
   }
 
   function sumirMensagem() {
+    alertaErro.style.display = "none";
     cardErro.style.display = "none";
   }
 </script>
