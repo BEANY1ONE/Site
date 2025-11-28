@@ -13,12 +13,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" />
   </head>
 
-  <body onload="listar()">
+  <body>
     <div class="cadastro">
       <div style="display: none;" class="alerta_erro" id="alertaErro">
         <div style="display: block;" class="card_erro" id="cardErro">
           <h1>Mensagem de Erro</h1> <br>
-          <p id="mensagem_erro">Esses inputs</p>
+          <p id="mensagem_erro"></p>
           <button onclick="voltar()">Voltar</button>
       </div>
       </div>
@@ -36,20 +36,22 @@
               <input
                 id="username_input"
                 type="text"
+                required
                 placeholder="Insira aqui seu Username"
               />
             </div>
             <div class="campo">
-              <span><b style="color: #2D2926;">*</b> E-mail:</span> <br>
+              <span><b style="color: red;">*</b> E-mail:</span> <br>
               <input
                 id="email_input"
                 type="text"
+                required
                 placeholder="guest123@gmail.com"
               />
             </div>
             <div class="campo">
               <span><b style="color: red;">*</b> Senha:</span> <br>
-              <input id="senha_input" type="password" placeholder="******"/>
+              <input id="senha_input" type="password" placeholder="******" required/>
             </div> <br>
             <button class="botao" onclick="cadastrar()">CADASTRAR</button>
             <div class="botao-abaixo">
@@ -57,19 +59,18 @@
               <a href="./login.html">Já Possui uma Conta?</a>
             </div>
           </div>
-          <div style="display: none" id="div_aguardar" class="loading-div">
-            <img src="./assets/tela-loading.gif" id="loading-gif" />
-          </div>
+          
         </div>
         <div class="card-cadastro-img"></div>
       </div>
+      <div style="display: none" id="div_aguardar" class="loading-div">
+            <img src="./assets/tela-loading.gif" id="loading-gif" />
+          </div>
     </div>
   </body>
 </html>
 
 <script>
-  // Array para armazenar usuários cadastrados para validação de username
-  let listaUsernamesCadastrados = [];
 
   function voltar() {
     alertaErro.style.display = "none";
@@ -95,10 +96,6 @@
     ) {
       if (usernameVar == "") {
       msg += "Nome de Usuário. "
-      } if (nomeVar == "") {
-        msg += "Nome. "
-      } if (idJogadorVar == "") {
-        msg += "ID do Jogador. "
       } if (emailVar == "") {
         msg += "Email. "
       } if (senhaVar == "") {
@@ -116,17 +113,14 @@
       setInterval(sumirMensagem, 5000);
     }
 
-    // Verificando se o username é de algum usuário cadastrado
-    for (let i = 0; i < listaUsernamesCadastrados.length; i++) {
-      if (listaUsernamesCadastrados[i].username != usernameVar) {
-        idUsuario = listaUsernamesCadastrados[i].idUsuario;
-        console.log("Nome de usuário válido.");
-        break;
-      } else {
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML = "O seu Nome de Usuário já está sendo usado!";
-        finalizarAguardar();
-      }
+    if (usernameVar.length <= 1 || !emailVar.includes("@gmail.com") || senhaVar <= 6) {
+      cardErro.style.display = "block";
+      alertaErro.style.display = "flex";
+      mensagem_erro.innerHTML =
+        `Algum/alguns campo(s) estão com dados inseridos incorretamente, verifique se você colocou: <br><br> - Username com mais de 1 caractere. <br> - Email correto. <br> - Senha maior que 6 dígitos`;
+        return false;
+    } else {
+      setInterval(sumirMensagem, 5000);
     }
 
     // Enviando o valor da nova input
@@ -168,26 +162,6 @@
       });
 
     return false;
-  }
-
-  // Listando usuarios cadastradas
-  function listar() {
-    fetch("/usuarios/listar", {
-      method: "GET",
-    })
-      .then(function (resposta) {
-        resposta.json().then((usuarios) => {
-          usuarios.forEach((usuario) => {
-            listaUsernamesCadastrados.push(usuario);
-
-            console.log("listaUsernamesCadastrados");
-            console.log(listaUsernamesCadastrados[0].username);
-          });
-        });
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
   }
 
   function sumirMensagem() {
