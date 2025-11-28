@@ -27,7 +27,7 @@
           <img
             class="logo-container"
             src="./assets/Logo/LogoBEANY1_FundoBranco.png"
-            alt=""
+            alt="logo-beany1"
           />
           <div class="formulario">
             <h1 style="text-align: center;">CADASTRO</h1>
@@ -36,19 +36,11 @@
               <input
                 id="username_input"
                 type="text"
-                placeholder="Insira aqui seu código"
+                placeholder="Insira aqui seu Username"
               />
             </div>
             <div class="campo">
-              <span><b style="color: red;">*</b> Nome:</span> <br>
-              <input id="nome_input" type="text" placeholder="Insira seu Nome" />
-            </div>
-            <div class="campo">
-              <span><b style="color: red;">*</b> ID do Jogador:</span> <br>
-              <input id="ipt_idJogador" type="text" placeholder="Insira seu ID" />
-            </div>
-            <div class="campo">
-              <span><b style="color: red;">*</b> E-mail:</span> <br>
+              <span><b style="color: #2D2926;">*</b> E-mail:</span> <br>
               <input
                 id="email_input"
                 type="text"
@@ -71,14 +63,13 @@
         </div>
         <div class="card-cadastro-img"></div>
       </div>
-      <div id="div_erros_cadastro"></div>
     </div>
   </body>
 </html>
 
 <script>
-  // Array para armazenar empresas cadastradas para validação de código de ativação
-  let listaEmpresasCadastradas = [];
+  // Array para armazenar usuários cadastrados para validação de username
+  let listaUsernamesCadastrados = [];
 
   function voltar() {
     alertaErro.style.display = "none";
@@ -89,21 +80,17 @@
 
     //Recupere o valor da nova input pelo nome do id
     // Agora vá para o método fetch logo abaixo
-    var nomeVar = nome_input.value;
     var emailVar = email_input.value;
     var senhaVar = senha_input.value;
-    var idJogadorVar = ipt_idJogador.value;
     var usernameVar = username_input.value;
-    var idEmpresaVincular;
+    // var idEmpresaVincular;
 
     var msg = `Os seguintes campos estão Vazios:<br><br>`;
 
     // Verificando se há algum campo em branco
     if (
-      nomeVar == "" ||
       emailVar == "" ||
       senhaVar == "" ||
-      idJogadorVar == "" ||
       usernameVar == ""
     ) {
       if (usernameVar == "") {
@@ -129,15 +116,15 @@
       setInterval(sumirMensagem, 5000);
     }
 
-    // Verificando se o código de ativação é de alguma empresa cadastrada
-    for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-      if (listaEmpresasCadastradas[i].codigo_ativacao == usernameVar) {
-        idEmpresaVincular = listaEmpresasCadastradas[i].id;
-        console.log("Código de ativação válido.");
+    // Verificando se o username é de algum usuário cadastrado
+    for (let i = 0; i < listaUsernamesCadastrados.length; i++) {
+      if (listaUsernamesCadastrados[i].username != usernameVar) {
+        idUsuario = listaUsernamesCadastrados[i].idUsuario;
+        console.log("Nome de usuário válido.");
         break;
       } else {
         cardErro.style.display = "block";
-        mensagem_erro.innerHTML = "(Mensagem de erro para código inválido)";
+        mensagem_erro.innerHTML = "O seu Nome de Usuário já está sendo usado!";
         finalizarAguardar();
       }
     }
@@ -151,10 +138,9 @@
       body: JSON.stringify({
         // crie um atributo que recebe o valor recuperado aqui
         // Agora vá para o arquivo routes/usuario.js
-        nomeServer: nomeVar,
+        usernameServer: usernameVar,
         emailServer: emailVar,
         senhaServer: senhaVar,
-        idEmpresaVincularServer: idEmpresaVincular,
       }),
     })
       .then(function (resposta) {
@@ -184,18 +170,18 @@
     return false;
   }
 
-  // Listando empresas cadastradas
+  // Listando usuarios cadastradas
   function listar() {
-    fetch("/empresas/listar", {
+    fetch("/usuarios/listar", {
       method: "GET",
     })
       .then(function (resposta) {
-        resposta.json().then((empresas) => {
-          empresas.forEach((empresa) => {
-            listaEmpresasCadastradas.push(empresa);
+        resposta.json().then((usuarios) => {
+          usuarios.forEach((usuario) => {
+            listaUsernamesCadastrados.push(usuario);
 
-            console.log("listaEmpresasCadastradas");
-            console.log(listaEmpresasCadastradas[0].codigo_ativacao);
+            console.log("listaUsernamesCadastrados");
+            console.log(listaUsernamesCadastrados[0].username);
           });
         });
       })

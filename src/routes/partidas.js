@@ -1,9 +1,9 @@
 var express = require("express");
 var router = express.Router();
 
-var aquarioController = require("../controllers/aquarioController");
+var aquarioController = require("../controllers/partidaController");
 
-router.get("/:empresaId", function (req, res) {
+router.get("/:usuario", function (req, res) {
   aquarioController.buscarAquariosPorEmpresa(req, res);
 });
 

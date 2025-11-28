@@ -1,6 +1,6 @@
 /* pagina mural */
 
-@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Cossette+Titre:wght@400;700&family=Glory:ital,wght@0,100..800;1,100..800&family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Jomhuria&family=Joti+One&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=M+PLUS+Rounded+1c&family=Oswald:wght@200..700&family=Quicksand:wght@300..700&display=swap');
 
 body {
   margin: 0;
@@ -120,7 +120,6 @@ body {
   position: relative;
   top: 0;
   left: 20%;
-  background-color: #161618;
   height: 100vh;
   overflow: auto;
 }
@@ -348,8 +347,8 @@ canvas {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  border-right: 3px solid #32b9cd;
-  background-color: #212124;
+  background-color: black;
+  box-shadow: 5px 0 12px rgba(0, 0, 0, 0.750);
 }
 
 .dash-right {
@@ -375,9 +374,12 @@ canvas {
 }
 
 .hello h3 {
-  color: #e3b062;
-  font-weight: 300;
-  font-size: 1.2rem;
+  color: #D9A303;
+  font-weight: 500;
+  font-size: 1.6rem;
+  margin: 0;
+
+  font-family: 'Glory';
 }
 
 .hello h3 span {
@@ -386,43 +388,76 @@ canvas {
 
 .btn-nav {
   width: 40%;
-  color: white;
-  background-color: #e6005a;
-  border-radius: 5px;
+  color: black;
+  background-color: #D9A303;
+  font-size: 24px;
+  border-radius: 2px 0 20px 10px;
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.650);
+
   text-align: center;
-  padding: 2% 5%;
+  padding: 5% 5%;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.6s ease;
+}
+
+.btn-nav:hover {
+  transform: scale(1.05);
 }
 
 .btn-nav-white {
   width: 40%;
-  background-color: white;
-  border: 3px solid #e6005a;
   border-radius: 5px;
   text-align: center;
   padding: 2% 5%;
+  transition: all 0.4s ease;
+}
+
+.btn-nav-white:hover {
+  transform: scale(1.08);
 }
 
 .btn-nav-white h3 {
-  color: #e6005a;
+  color: white;
   padding: 0;
   margin: 0;
+
+  font-size: 24px;
+  font-weight: 400;
+  font-family: 'Glory';
+  transition: all 0.4s ease;
+}
+
+.btn-nav-white h3:hover {
+  font-weight: 600;
+    text-shadow: 0 3px 6px rgba(255, 255, 255, 0.400);
 }
 
 .btn-nav h3,
 .btn-logout h3 {
   margin: 0;
   padding: 0;
+  font-family: 'Glory';
 }
 
 .btn-logout {
   margin: 0;
   padding: 0;
   width: 20%;
-  background-color: #32b9cd;
-  color: white;
+  font-size: 1.6rem;
+  font-weight: bolder;
+  color: #D9A303;
+
   border-radius: 10px;
   text-align: center;
-  padding: 10px 15px;
-  margin-bottom: 100px;
+  padding: 12px 15px;
+  margin-bottom: 50px;
   cursor: pointer;
+
+  transition: all 0.6s ease;
+}
+
+.btn-logout:hover {
+  transform: scale(1.1);
+  text-shadow: 0 3px 12px rgba(255, 255, 255, 0.400);
 }
