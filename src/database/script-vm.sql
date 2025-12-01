@@ -10,7 +10,7 @@ mysql -u 'root' -p
 
 -- O Identified by significa a senha do usuário, NÃO CONFUNDA :)
 create user 'beanyone'@'localhost' 
-	identified by 'copadobrasil';
+	identified by 'urubu#100';
 
 -- permissões do usuário
 -- permitir todos os comandos

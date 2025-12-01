@@ -1,19 +1,28 @@
+// Define a variável (que faz comandos no MySQL) pra ser utilizada abaixo
 var medidaModel = require("../models/medidaModel");
 
+// função de buscarUltimasMedidas  
 function buscarUltimasMedidas(req, res) {
 
-    const limite_linhas = 7;
+    // Define o limite de linhas/registros do gráfico
+    const limite_linhas = 8;
 
-    var idAquario = req.params.idAquario;
+    // Define a variável idPartida, requisitando o paramêtro
+    var idPartida = req.params.idPartida; 
 
+    // Mostra o limite de dados no gráfico
     console.log(`Recuperando as ultimas ${limite_linhas} medidas`);
 
-    medidaModel.buscarUltimasMedidas(idAquario, limite_linhas).then(function (resultado) {
+    // Utiliza a função do MySQL e busca o idPartida(do mySQL) e então faz a função resultado
+    medidaModel.buscarUltimasMedidas(idPartida, limite_linhas).then(function (resultado) {
+        // Se encontrar resultados, define como resposta o json exibido, se não, envia "Nenhum
+        // resultado encontrado" como response
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
             res.status(204).send("Nenhum resultado encontrado!")
         }
+        // define a função de erro caso aconteça nas medidas
     }).catch(function (erro) {
         console.log(erro);
         console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
@@ -21,19 +30,24 @@ function buscarUltimasMedidas(req, res) {
     });
 }
 
-
+// Função de buscar as medidas em tempo real abaixo
 function buscarMedidasEmTempoReal(req, res) {
 
-    var idAquario = req.params.idAquario;
+    // Define a variável idPartida que requer parametros idPartida do medidaModels.js
+    var idPartida = req.params.idPartida;
 
+    // Mostra no console que vai recuperar as medidas
     console.log(`Recuperando medidas em tempo real`);
 
-    medidaModel.buscarMedidasEmTempoReal(idAquario).then(function (resultado) {
+    // Busca o idPartida dentro da função SQL medidaModel, onde então, realiza função resultado
+    medidaModel.buscarMedidasEmTempoReal(idPartida).then(function (resultado) {
+        // Se encontrar um resultado de idPartida, responde com resultado que pega em forma json
         if (resultado.length > 0) {
             res.status(200).json(resultado);
-        } else {
+        } else { // Se não, apenas responde que não encontrou nada
             res.status(204).send("Nenhum resultado encontrado!")
         }
+        // Define função erro caso ocorra ao buscar as medidas
     }).catch(function (erro) {
         console.log(erro);
         console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
@@ -41,6 +55,7 @@ function buscarMedidasEmTempoReal(req, res) {
     });
 }
 
+// Exporta as funções do controller.
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal

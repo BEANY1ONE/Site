@@ -102,13 +102,14 @@
 
         if (resposta.ok) {
           console.log(resposta);
-
+ 
           resposta.json().then(json => {
             console.log(json);
             console.log(JSON.stringify(json));
             sessionStorage.EMAIL_USUARIO = json.email;
             sessionStorage.NOME_USUARIO = json.username;
             sessionStorage.ID_USUARIO = json.idUsuario;
+            sessionStorage.PARTIDAS = JSON.stringify(json.partidas);
 
             setTimeout(function () {
               window.location = "./dashboard/dashboard.html";

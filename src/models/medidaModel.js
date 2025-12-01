@@ -1,28 +1,31 @@
+// Define qual será as configurações do Banco de Dados que irá utilizar pra fazer isso
 var database = require("../database/config");
 
-function buscarUltimasMedidas(idAquario, limite_linhas) {
+// Cria a função buscarUltimasMedidas, com os valores limitados e buscando por idUsuario
+function buscarUltimasMedidas(idUsuario, limite_linhas) { 
 
     var instrucaoSql = `SELECT 
-        dht11_temperatura as temperatura, 
-        dht11_umidade as umidade,
-                        momento,
+        kills as kills,
+        deaths as deaths,
+        dtPartida as momento,
                         DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico
-                    FROM medida
-                    WHERE fk_aquario = ${idAquario}
-                    ORDER BY id DESC LIMIT ${limite_linhas}`;
+                    FROM partidaUsuario
+                    WHERE fkUsuario = ${idUsuario}
+                    ORDER BY id DESC LIMIT ${limite_linhas}`; 
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
-function buscarMedidasEmTempoReal(idAquario) {
+function buscarMedidasEmTempoReal(idUsuario) { 
 
     var instrucaoSql = `SELECT 
-        dht11_temperatura as temperatura, 
-        dht11_umidade as umidade,
-                        DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico, 
-                        fk_aquario 
-                        FROM medida WHERE fk_aquario = ${idAquario} 
+        kills as kills, 
+        deaths as deaths,
+        dtPartida as momento,
+                        DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico,
+                        idPartida 
+                        FROM partidaUsuario WHERE fkUsuario = ${idUsuario}
                     ORDER BY id DESC LIMIT 1`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);

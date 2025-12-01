@@ -104,7 +104,7 @@ function exibirCards() {
 
 function transformarEmDiv({ idAquario, temp, grauDeAviso, grauDeAvisoCor }) {
 
-    var descricao = JSON.parse(sessionStorage.AQUARIOS).find(item => item.id == idAquario).descricao;
+    var descricao = JSON.parse(sessionStorage.PARTIDAS).find(item => item.id == idAquario).descricao;
     return `
     <div class="mensagem-alarme">
         <div class="informacao">
@@ -118,7 +118,7 @@ function transformarEmDiv({ idAquario, temp, grauDeAviso, grauDeAvisoCor }) {
 }
 
 function atualizacaoPeriodica() {
-    JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
+    JSON.parse(sessionStorage.PARTIDAS).forEach(item => {
         obterdados(item.id)
     });
     setTimeout(atualizacaoPeriodica, 5000);

@@ -1,10 +1,11 @@
 var usuarioModel = require("../models/usuarioModel");
+var partidaModel = require("../models/partidaModel");
 
 // Define a função com objetos de req(requisição) do usuário
 // e res(reposta) pro usuário
 function autenticar(req, res) {
     // Pega lá do cadastro.html o valor das variáveis no input
-    var username = req.body.usernameServer
+    var username = req.body.usernameServer;
     var senha = req.body.senhaServer;
 
     // Faz mais uma validação e verifica se os campos já estão autenticados, caso não, manda esse aviso
@@ -27,10 +28,23 @@ function autenticar(req, res) {
                     // Se existir um usuário (no caso length == 1)
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
-                        res.status(200).json(resultadoAutenticar[0]);
-                    } 
+                        
+                        partidaModel.buscarPartidas(resultadoAutenticar[0].idUsuario)
+                            .then((resultadoPartidas) => {
+                                if (resultadoPartidas.length > 0) {
+                                    res.json({
+                                        idUsuario: resultadoAutenticar[0].idUsuario,
+                                        email: resultadoAutenticar[0].email,
+                                        username: resultadoAutenticar[0].username,
+                                        senha: resultadoAutenticar[0].senha,
+                                        partidas: resultadoPartidas
+                                    });
+                                } else {
+                                    res.status(204).json({ partidas: [] });
+                                }
+                            })
                     // Se não existir usuário, informa que algo está errado:
-                    else if (resultadoAutenticar.length == 0) {
+                        } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Username e/ou senha inválido(s)");
                     } 
                     // E se tiver mais que um usuário com os inputs acima, informe:
@@ -46,7 +60,6 @@ function autenticar(req, res) {
                 }
             );
     }
-
 }
 
 // Abaixo está a função cadastrar com requisições e respostas
