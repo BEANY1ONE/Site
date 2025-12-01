@@ -17,7 +17,7 @@
     <div class="cadastro">
       <div style="display: none;" class="alerta_erro" id="alertaErro">
         <div style="display: block;" class="card_erro" id="cardErro">
-          <h1>Mensagem de Erro</h1> <br>
+          <h1>Mensagem</h1> <br>
           <p id="mensagem_erro"></p>
           <button onclick="voltar()">Voltar</button>
       </div>
@@ -124,6 +124,8 @@
     }
 
     // Enviando o valor da nova input
+    // Aqui ele vai pra pasta de Rotas e realiza uma fetch/busca na função cadastrar dentro 
+    // da rota usuarios
     fetch("/usuarios/cadastrar", {
       method: "POST",
       headers: {

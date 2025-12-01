@@ -84,9 +84,9 @@
 
     let proximaAtualizacao;
 
-    window.onload = exibirAquariosDoUsuario();
+    window.onload = exibirPartidasDoUsuario();
 
-    function exibirAquariosDoUsuario() {
+    function exibirPartidasDoUsuario() {
         var aquarios = JSON.parse(sessionStorage.AQUARIOS);
         aquarios.forEach(item => {
             document.getElementById("btnAquario").innerHTML += `

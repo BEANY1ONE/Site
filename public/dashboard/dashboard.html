@@ -65,8 +65,7 @@
         <div class="dash">
             <div id="alerta">
             </div>
-
-            <div class="btns-dash" id="btnAquario">
+            <div class="btns-dash" id="btnPartida">
                 <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
             </div>
             <div id="graficos">
@@ -84,13 +83,13 @@
 
     let proximaAtualizacao;
 
-    window.onload = exibirAquariosDoUsuario();
+    window.onload = exibirPartidasDoUsuario();
 
-    function exibirAquariosDoUsuario() {
+    function exibirPartidasDoUsuario() {
         var aquarios = JSON.parse(sessionStorage.AQUARIOS);
         aquarios.forEach(item => {
-            document.getElementById("btnAquario").innerHTML += `
-            <button class="btn-chart" onclick="exibirAquario(${item.id})" id="btnAquario${item.id}">${item.descricao}</button>
+            document.getElementById("btnPartida").innerHTML += `
+            <button class="btn-chart" onclick="exibirPartidaas(${item.id})" id="btnPartida${item.id}">${item.descricao}</button>
             `
 
             document.getElementById("graficos").innerHTML += `
@@ -111,7 +110,7 @@
         });
 
         if (aquarios.length > 0) {
-            exibirAquario(aquarios[0].id)
+            exibirPartidaas(aquarios[0].id)
         }
     }
 
@@ -121,7 +120,7 @@
         tituloAquario.innerHTML = "Últimas medidas de Temperatura e Umidade do <span style='color: #e6005a'>" + descricao + "</span>"
     }
 
-    function exibirAquario(idAquario) {
+    function exibirPartidaas(idAquario) {
         let todosOsGraficos = JSON.parse(sessionStorage.AQUARIOS);
 
         for (i = 0; i < todosOsGraficos.length; i++) {
@@ -134,7 +133,7 @@
                 elementoAtual.classList.add("display-none")
 
                 // alterando estilo do botão
-                let btnAtual = document.getElementById(`btnAquario${todosOsGraficos[i].id}`)
+                let btnAtual = document.getElementById(`btnPartida${todosOsGraficos[i].id}`)
                 if (btnAtual.classList.contains("btn-pink")) {
                     btnAtual.classList.remove("btn-pink")
                 }
@@ -148,7 +147,7 @@
         graficoExibir.classList.add("display-block")
 
         // alterando estilo do botão
-        let btnExibir = document.getElementById(`btnAquario${idAquario}`)
+        let btnExibir = document.getElementById(`btnPartida${idAquario}`)
         btnExibir.classList.remove("btn-white")
         btnExibir.classList.add("btn-pink")
     }

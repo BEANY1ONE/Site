@@ -65,6 +65,8 @@
   }
 
   function entrar() {
+    aguardar();
+
     var usernameVar = username_input.value;
     var senhaVar = senha_input.value;
     var msg = `Esses campos estão vazios: <br>`
@@ -83,7 +85,7 @@
       setInterval(sumirMensagem, 5000);
     }
 
-    console.log("FORM LOGIN: ", emailVar);
+    console.log("FORM LOGIN: ", usernameVar);
     console.log("FORM SENHA: ", senhaVar);
 
     fetch("/usuarios/autenticar", {
@@ -94,25 +96,24 @@
       body: JSON.stringify({
         usernameServer: usernameVar,
         senhaServer: senhaVar,
-      }),
-    })
-      .then(function (resposta) {
+      })
+    }).then(function (resposta) {
         console.log("ESTOU NO THEN DO entrar()!");
 
         if (resposta.ok) {
           console.log(resposta);
 
-          resposta.json().then((json) => {
+          resposta.json().then(json => {
             console.log(json);
             console.log(JSON.stringify(json));
             sessionStorage.EMAIL_USUARIO = json.email;
             sessionStorage.NOME_USUARIO = json.username;
             sessionStorage.ID_USUARIO = json.idUsuario;
-            sessionStorage.PARTIDAS = JSON.stringify(json.partidas);
 
             setTimeout(function () {
-              window.location = "./dashboard/partidas1.html";
+              window.location = "./dashboard/dashboard.html";
             }, 1000); // apenas para exibir o loading
+            
           });
         } else {
           console.log("Houve um erro ao tentar realizar o login!");

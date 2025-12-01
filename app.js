@@ -21,9 +21,9 @@ var app = express();
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var avisosRouter = require("./src/routes/avisos");
-var medidasRouter = require("./src/routes/medidas");
+// var medidasRouter = require("./src/routes/medidas");
 var partidasRouter = require("./src/routes/partidas");
-var empresasRouter = require("./src/routes/empresas");
+// var empresasRouter = require("./src/routes/empresas");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -34,9 +34,9 @@ app.use(cors());
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/avisos", avisosRouter);
-app.use("/medidas", medidasRouter);
+// app.use("/medidas", medidasRouter);
 app.use("/aquarios", partidasRouter);
-app.use("/empresas", empresasRouter);
+// app.use("/empresas", empresasRouter);
 
 // Exibe no terminal quando rodar a mensagem abaixo, funcionando como um alert() de JS, tendo \n
 

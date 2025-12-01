@@ -1,46 +1,44 @@
 var usuarioModel = require("../models/usuarioModel");
-// var aquarioModel = require("../models/partidaModel");
 
+// Define a função com objetos de req(requisição) do usuário
+// e res(reposta) pro usuário
 function autenticar(req, res) {
-    var email = req.body.emailServer;
+    // Pega lá do cadastro.html o valor das variáveis no input
+    var username = req.body.usernameServer
     var senha = req.body.senhaServer;
 
-    if (email == undefined) {
-        res.status(400).send("Seu email está indefinido!");
-    } else if (senha == undefined) {
+    // Faz mais uma validação e verifica se os campos já estão autenticados, caso não, manda esse aviso
+    if (senha == undefined) {
         res.status(400).send("Sua senha está indefinida!");
+    } else if (username == undefined) {
+        res.status(400).send("Seu nome de usuário está indefinido!");
     } else {
 
-        usuarioModel.autenticar(email, senha)
+        // Define uma função lá pro usuarioModel(função autenticar), onde pega os valores e
+        // faz um select pra verificar tudo
+        usuarioModel.autenticar(username, senha)
             .then(
                 function (resultadoAutenticar) {
+                    // Exibe o tamanho da lista encontrada
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
-                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
+                    // Transforma JSON(vulgo a lista de valores que receber) em String/tratamento
+                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`);
 
+                    // Se existir um usuário (no caso length == 1)
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
-
-                        partidaModel.buscarPartidas(resultadoAutenticar[0].username)
-                            .then((resultadoPartidas) => {
-                                if (resultadoPartidas.length > 0) {
-                                    res.json({
-                                        id: resultadoAutenticar[0].idPartida,
-                                        email: resultadoAutenticar[0].email,
-                                        nome: resultadoAutenticar[0].nome,
-                                        senha: resultadoAutenticar[0].senha,
-                                        partidas: resultadoPartidas
-                                    });
-                                } else {
-                                    res.status(204).json({ partidas: [] });
-                                }
-                            })
-                    } else if (resultadoAutenticar.length == 0) {
-                        res.status(403).send("Email e/ou senha inválido(s)");
-                    } else {
-                        res.status(403).send("Mais de um usuário com o mesmo login e senha!");
+                        res.status(200).json(resultadoAutenticar[0]);
+                    } 
+                    // Se não existir usuário, informa que algo está errado:
+                    else if (resultadoAutenticar.length == 0) {
+                        res.status(403).send("Username e/ou senha inválido(s)");
+                    } 
+                    // E se tiver mais que um usuário com os inputs acima, informe:
+                    else {
+                        res.status(403).send("Mais de um usuário com o mesmo username e senha!");
                     }
                 }
-            ).catch(
+            ).catch( // Catch captura o erro e exibe erros caso não seja possível logar
                 function (erro) {
                     console.log(erro);
                     console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
@@ -51,6 +49,7 @@ function autenticar(req, res) {
 
 }
 
+// Abaixo está a função cadastrar com requisições e respostas
 function cadastrar(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var username = req.body.usernameServer;
@@ -85,6 +84,9 @@ function cadastrar(req, res) {
     }
 }
 
+// Está exportando as funções cadastrar e autenticar (seria o exports) para
+// os arquivos module. Exports serve para passar funções para que outros arquivos
+// Utilizem sem a necessidade de escrever o código denovo
 module.exports = {
     autenticar,
     cadastrar
