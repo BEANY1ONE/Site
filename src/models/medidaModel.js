@@ -8,10 +8,10 @@ function buscarUltimasMedidas(idUsuario, limite_linhas) {
         kills as kills,
         deaths as deaths,
         dtPartida as momento,
-                        DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico
+                idPartida
                     FROM partidaUsuario
                     WHERE fkUsuario = ${idUsuario}
-                    ORDER BY id DESC LIMIT ${limite_linhas}`; 
+                    ORDER BY idPartida DESC LIMIT ${limite_linhas}`; 
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -23,10 +23,10 @@ function buscarMedidasEmTempoReal(idUsuario) {
         kills as kills, 
         deaths as deaths,
         dtPartida as momento,
-                        DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico,
                         idPartida 
-                        FROM partidaUsuario WHERE fkUsuario = ${idUsuario}
-                    ORDER BY id DESC LIMIT 1`;
+                        FROM partidaUsuario 
+                        WHERE fkUsuario = ${idUsuario}
+                    ORDER BY idPartida DESC LIMIT 1`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);

@@ -34,8 +34,8 @@ app.use(cors());
 app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/avisos", avisosRouter);
-app.use("/medidas", medidasPartidasRouter);
-app.use("/aquarios", partidasRouter);
+app.use("/medidasPartidas", medidasPartidasRouter);
+app.use("/partidas", partidasRouter);
 // app.use("/empresas", empresasRouter);
 
 // Exibe no terminal quando rodar a mensagem abaixo, funcionando como um alert() de JS, tendo \n

@@ -63,6 +63,9 @@
         </div>
 
         <div class="dash">
+            <div id="banner-mapa">
+                <h1 id="banner-mapa-titulo">Oregon</h1>
+            </div>
             <div id="alerta">
             </div>
             <div class="btns-dash" id="btnPartida">
@@ -105,9 +108,6 @@
             // Aviso da captura
             document.getElementById("graficos").innerHTML += `
                 <div id="grafico${item.idPartida}" class="display-none">
-                    <h3 class="tituloGraficos">
-                        <span id="tituloPartida${item.idPartida}">${item.mapa}</span>
-                    </h3>
                     <div class="graph">
                         <canvas id="myChartCanvas${item.idPartida}"></canvas>
                     </div>
@@ -116,6 +116,11 @@
                     </div>
                 </div>
             `
+
+            document.getElementById("banner-mapa-titulo").innerHTML = `
+            <h1 class="banner-mapa.titulo">
+                        <span id="tituloPartida${item.idPartida}">${item.mapa}</span>
+            </h1>`
 
             // Aqui chama a função obterDadosGrafico pegando a var item.idPartida
             obterDadosGrafico(item.idPartida)
@@ -133,7 +138,7 @@
         var tituloPartida = document.getElementById(`tituloPartida${idPartida}`)
         // Define var como JSON e pega os objetos no sessionStorage, encontrando um idPartida similar e o nome do mapa
         var mapa = JSON.parse(sessionStorage.PARTIDAS).find(item => item.idPartida == idPartida).mapa;
-        tituloPartida.innerHTML = "Últimas informações do Mapa: <span style='color: #e6005a'>" + mapa + "</span>"
+        tituloPartida.innerHTML = "<span style='color: #e6005a'>" + mapa + "</span>"
     }
 
     // função para exibir as partidas que estão no Banco de Dados
@@ -251,15 +256,20 @@
             datasets: [{
                 label: 'Kills',
                 data: [],
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
+                fill: true,
+                backgroundColor: 'black',
+                borderColor: 'black',
+                barPercentage: '0.5',
+                padding: '20',
                 tension: 0.1
             },
             {
                 label: 'Deaths',
                 data: [],
-                fill: false,
-                borderColor: 'rgb(199, 52, 52)',
+                fill: true,
+                backgroundColor: '#D9A303',
+                borderColor: 'black',
+                barPercentage: '0.5',
                 tension: 0.1
             }]
         };
@@ -274,7 +284,7 @@
             // Variável registro é a resposta[contador]
             var registro = resposta[i];
             // Envia na label o momento do gráfico
-            labels.push(registro.idPartida);
+            labels.push(registro.momento);
             // Aqui pega os dados de kills e deaths
             dados.datasets[0].data.push(registro.kills);
             dados.datasets[1].data.push(registro.deaths);
@@ -291,8 +301,18 @@
         // Criando estrutura para plotar gráfico - config
         // Define o tipo de gráfico e os dados que serão exibidos
         const config = {
-            type: 'line',
+            type: 'bar',
             data: dados,
+            options: {
+                layout: {
+                    padding: {
+                        top: 20,
+                        bottom: 0,
+                        left: 0,
+                        right: 0
+                    }
+                }
+            }
         };
 
         // Adicionando gráfico criado em div na tela
