@@ -4,20 +4,10 @@
     // Cria a função buscarUltimasMedidas, com os valores limitados e buscando por idUsuario
     function buscarUltimasMedidas(idUsuario, limite_linhas) { 
 
-        var instrucaoSql = `SELECT 
-        kills AS kills,
-        deaths AS deaths,
-        dtPartida AS momento,
-        CASE
-            WHEN deaths = 0 THEN kills
-            ELSE kills * 1.0 / deaths
-        END AS kd,
-        idPartida
-    FROM partidaUsuario
-    WHERE fkUsuario = ${idUsuario}
-    ORDER BY idPartida DESC
-    LIMIT ${limite_linhas};`;
-
+    var instrucaoSql = `
+    SELECT kills AS kills, deaths AS deaths, dtPartida AS momento, mapa, CASE WHEN deaths = 0 THEN kills 
+    ELSE kills * 1.0 / deaths END AS kd, idPartida, (SELECT CASE WHEN deaths = 0 THEN kills ELSE kills * 1.0 / deaths END AS kd FROM partidaUsuario WHERE fkUsuario = 5 GROUP BY kd ORDER BY kd DESC LIMIT 1) 
+    AS kdMaximo FROM partidaUsuario WHERE fkUsuario = 5 GROUP BY kd ORDER BY kd DESC LIMIT 6;`;
 
         console.log("Executando a instrução SQL: \n" + instrucaoSql);
         return database.executar(instrucaoSql);

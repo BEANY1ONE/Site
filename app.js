@@ -23,6 +23,7 @@ var usuarioRouter = require("./src/routes/usuarios");
 var avisosRouter = require("./src/routes/avisos");
 var medidasPartidasRouter = require("./src/routes/medidasPartidas");
 var partidasRouter = require("./src/routes/partidas");
+var inserirRouter = require("./src/routes/inserir")
 // var empresasRouter = require("./src/routes/empresas");
 
 app.use(express.json());
@@ -36,6 +37,7 @@ app.use("/usuarios", usuarioRouter);
 app.use("/avisos", avisosRouter);
 app.use("/medidasPartidas", medidasPartidasRouter);
 app.use("/partidas", partidasRouter);
+// app.use("/inserir", inserirRouter);
 // app.use("/empresas", empresasRouter);
 
 // Exibe no terminal quando rodar a mensagem abaixo, funcionando como um alert() de JS, tendo \n

@@ -57,7 +57,10 @@
 
         <div class="dash">
             <div id="banner-mapa">
-                <h1 id="banner-mapa-titulo">Oregon</h1>
+                <h1 id="banner-mapa-titulo"></h1>
+            </div>
+            <div id="kpi-todos" class="kpi-todos">
+                
             </div>
             <div class="btns-dash" id="btnPartida">
                 <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
@@ -111,6 +114,15 @@
             <h1 class="banner-mapa.titulo">
                         <span id="tituloPartida${item.idPartida}">${item.mapa}</span>
             </h1>`
+
+            document.getElementById("kpi-todos").innerHTML = `<div id="kpi-geral1" class="kpi">
+                    <h3>Melhor KD (Partida)</h3>
+                    <span id="melhorKd"></span>
+                </div>
+                <div id="kpi-geral2" class="kpi">
+                    <h3>Maior Qtd Kills</h3>
+                    <span id="maiorKill"></span>
+                </div>`;
 
             // Aqui chama a função obterDadosGrafico pegando a var item.idPartida
             obterDadosGrafico(item.idPartida)
@@ -212,6 +224,9 @@
 
                     // plota os gráficos a partir do idPartida e com uma resposta
                     plotarGrafico(resposta, idPartida);
+                    // Coloca na primeira KPI o dado de kdMaximo
+                    var kpiMelhorKd = resposta[0].kdMaximo
+                    document.getElementById("melhorKd").innerHTML = kpiMelhorKd
 
                 });
             } else {

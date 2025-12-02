@@ -11,24 +11,24 @@ function buscarPartidas(req, res) {
     } 
   }).catch(function (erro) {
     console.log(erro);
-    console.log("Houve um erro ao buscar os aquarios: ", erro.sqlMessage);
+    console.log("Houve um erro ao buscar as partidas: ", erro.sqlMessage);
     res.status(500).json(erro.sqlMessage);
   });
 }
 
 
 function cadastrar(req, res) {
-  var descricao = req.body.descricao;
+  var senha = req.body.senha;
   var idUsuario = req.body.idUsuario;
 
-  if (descricao == undefined) {
-    res.status(400).send("descricao está undefined!");
+  if (senha == undefined) {
+    res.status(400).send("senha está undefined!");
   } else if (idUsuario == undefined) {
     res.status(400).send("idUsuario está undefined!");
   } else {
 
 
-    partidaModel.cadastrar(descricao, idUsuario)
+    partidaModel.cadastrar(senha, idUsuario)
       .then((resultado) => {
         res.status(201).json(resultado);
       }

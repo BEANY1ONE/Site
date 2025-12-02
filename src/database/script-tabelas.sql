@@ -109,7 +109,7 @@ CREATE TABLE partidaUsuario (
 		CONSTRAINT fkEquipePartida FOREIGN KEY (fkEquipe) REFERENCES equipe(idEquipe),
 		PRIMARY KEY (idPartida, fkUsuario, fkEquipe),
 	dtPartida DATE DEFAULT NOW() NOT NULL,
-	mapa VARCHAR(45),
+	mapa VARCHAR(45) DEFAULT 'Mapa Indefinido',
 	resultado VARCHAR(45) NOT NULL,
 		CONSTRAINT chkResultado CHECK (resultado IN('Vitória', 'Derrota')),
 	kills INT NOT NULL,
