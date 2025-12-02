@@ -113,6 +113,7 @@
       setInterval(sumirMensagem, 5000);
     }
 
+    // Aqui verifica se o nome, email e senha estão com as regras de negócio certas
     if (usernameVar.length <= 1 || !emailVar.includes("@gmail.com") || senhaVar <= 6) {
       cardErro.style.display = "block";
       alertaErro.style.display = "flex";

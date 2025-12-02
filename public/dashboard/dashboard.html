@@ -140,7 +140,7 @@
         var tituloPartida = document.getElementById(`tituloPartida${idPartida}`)
         // Define var como JSON e pega os objetos no sessionStorage, encontrando um idPartida similar e o nome do mapa
         var mapa = JSON.parse(sessionStorage.PARTIDAS).find(item => item.idPartida == idPartida).mapa;
-        tituloPartida.innerHTML = "<span style='color: #e6005a'>" + mapa + "</span>"
+        tituloPartida.innerHTML = "<span style='color: #D9A303'>" + mapa + "</span>"
     }
 
     // função para exibir as partidas que estão no Banco de Dados
@@ -169,7 +169,7 @@
                     btnAtual.classList.remove("btn-pink")
                 }
                 // Define botão como estilo/classe branco
-                btnAtual.classList.add("btn-white")
+                btnAtual.classList.add("btn-white");
             }
         }
 
@@ -202,7 +202,7 @@
     //     Para ajustar o "select", ajuste o comando sql em src/models
     function obterDadosGrafico(idPartida) {
 
-        // Abaixo fica alterando o título dependendo da patida escolhida
+        // Abaixo fica alterando o título dependendo da partida escolhida
         alterarTitulo(idPartida)
 
         // Se a proximaAtualização não esta definida ainda, vai reiniciar o tempo pra atualizar
@@ -226,7 +226,10 @@
                     plotarGrafico(resposta, idPartida);
                     // Coloca na primeira KPI o dado de kdMaximo
                     var kpiMelhorKd = resposta[0].kdMaximo
-                    document.getElementById("melhorKd").innerHTML = kpiMelhorKd
+                    document.getElementById("melhorKd").innerHTML = kpiMelhorKd;
+                    // Coloca na segunda KPI o dado maiorKill
+                    var kpiMaiorKill = resposta[0].maiorKill
+                    document.getElementById("maiorKill").innerHTML = kpiMaiorKill;
 
                 });
             } else {
@@ -264,7 +267,7 @@
                 fill: false,
                 backgroundColor: 'black',
                 borderColor: 'black',
-                borderWidth: 3,
+                borderWidth: 5,
                 tension: 0.1
             },
             {
@@ -273,16 +276,16 @@
                 fill: false,
                 backgroundColor: '#D9A303',
                 borderColor: '#D9A303',
-                borderWidth: 3,
+                borderWidth: 5,
                 tension: 0.1
             },
             {
                 label: 'KD',
                 data: [],
                 fill: false,
-                backgroundColor: 'green',
-                borderColor: 'green',
-                borderWidth: 3,
+                backgroundColor: '#8F0C89',
+                borderColor: '#8F0C89',
+                borderWidth: 5,
                 tension: 0.05
             }]
         };
@@ -331,14 +334,19 @@
                         }
                     },
                     min: 0,
-                    max: 20,
+                    max: 30,
                     ticks: {
                         stepSize: 2
                     },
                     grid: {
-                        color: 'rgba(0, 0, 0, 0.300)',
-                        borderColor: 'red',
+                        color: 'rgba(0, 0, 0, 0.400)',
                         borderWidth: 2
+                    }
+                },
+                x: {
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.400)',
+                        borderWidth: 5
                     }
                 }
             }

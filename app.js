@@ -37,8 +37,8 @@ app.use("/usuarios", usuarioRouter);
 app.use("/avisos", avisosRouter);
 app.use("/medidasPartidas", medidasPartidasRouter);
 app.use("/partidas", partidasRouter);
-// app.use("/inserir", inserirRouter);
-// app.use("/empresas", empresasRouter);
+app.use("/inserir", inserirRouter);
+
 
 // Exibe no terminal quando rodar a mensagem abaixo, funcionando como um alert() de JS, tendo \n
 

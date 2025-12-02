@@ -6,8 +6,8 @@
 
     var instrucaoSql = `
     SELECT kills AS kills, deaths AS deaths, dtPartida AS momento, mapa, CASE WHEN deaths = 0 THEN kills 
-    ELSE kills * 1.0 / deaths END AS kd, idPartida, (SELECT CASE WHEN deaths = 0 THEN kills ELSE kills * 1.0 / deaths END AS kd FROM partidaUsuario WHERE fkUsuario = 5 GROUP BY kd ORDER BY kd DESC LIMIT 1) 
-    AS kdMaximo FROM partidaUsuario WHERE fkUsuario = 5 GROUP BY kd ORDER BY kd DESC LIMIT 6;`;
+    ELSE kills * 1.0 / deaths END AS kd, idPartida, (SELECT CASE WHEN deaths = 0 THEN kills ELSE kills * 1.0 / deaths END AS kd FROM partidaUsuario WHERE fkUsuario = ${idUsuario} GROUP BY kd ORDER BY kd DESC LIMIT 1) 
+    AS kdMaximo, (select MAX(kills) FROM partidaUsuario WHERE fkUsuario = ${idUsuario}) AS maiorKill FROM partidaUsuario WHERE fkUsuario = ${idUsuario} GROUP BY kd ORDER BY kd DESC LIMIT ${limite_linhas};`;
 
         console.log("Executando a instrução SQL: \n" + instrucaoSql);
         return database.executar(instrucaoSql);

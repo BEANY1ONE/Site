@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="./../css/dashboards.css">
     <link rel="stylesheet" href="./../css/estilo.css" />
     <script src="../js/sessao.js"></script>
-    <script src="./../js/alerta.js"></script>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
@@ -23,7 +22,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!--FONT AWESOME-->
-    <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
+    <!-- <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script> -->
 </head>
 
 <!-- <body onload=" atualizarFeed()"> -->
@@ -57,34 +56,120 @@
         </div>
 
         <div class="inserir">
-            <div class="inserir-direita">
-                <h4></h4>
-                <input type="text">
-                <h4></h4>
-                <input type="text">
-                <h4></h4>
-                <input type="text">
-            </div>
-            <div class="inserir-esquerda">
-                <h4></h4>
-                <input type="text">
-                <h4></h4>
-                <input type="text">
-                <h4></h4>
-                <input type="text">
+            <div class="inserir-conteudo">
+                <h1>INSIRA SEUS DADOS</h1>
+                <div class="inserir-linha">
+                    <div class="inserir-direita">
+                        <h4>Time:</h4>
+                        <select required name="selecionar" id="select_time">
+                            <option disabled selected value="#">Selecione um Time</option>
+                            <option value="1">Equipe 1</option>
+                            <option value="2">Equipe 2</option>
+                        </select>
+                        <h4>Mapa:</h4>
+                        <input id="ipt_mapa" placeholder="Insira o Mapa da Partida aqui" type="text">
+                        <h4>Kills:</h4>
+                        <input required id="ipt_kill" placeholder="Insira a Qtd de Kills aqui" type="number">
+                    </div>
+                    <div class="inserir-esquerda">
+                        <h4>Pontos:</h4>
+                        <input id="ipt_pontos" placeholder="Insira a Qtd de Pontos aqui" type="number"><br>
+                        <h4>Resultado:</h4>
+                        <select required name="selecionar" id="select_resultado">
+                            <option disabled selected value="#">Selecione um Resultado</option>
+                            <option value="vitoria">Vitória</option>
+                            <option value="derrota">Derrota</option>
+                        </select>
+                        <h4>Mortes:</h4>
+                        <input required id="ipt_mortes" placeholder="Insira a Qtd de Mortes aqui" type="number">
+                    </div>
+                </div><br>
+                <button onclick="inserirDados()">Inserir Partida</button>
             </div>
         </div>
     </div>
 
 
 </body>
-
 </html>
 
 <script>
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
-    let proximaAtualizacao;
+    function inserirDados() {
+        var time = select_time.value;
+        var mapa = ipt_mapa.value;
+        var resultado = select_resultado.value;
+        var pontos = Number(ipt_pontos.value);
+        var kills = Number(ipt_kill.value);
+        var mortes = Number(ipt_mortes.value);
+
+        var msgErro = "Os seguintes campos estão vazios/inválidos: \n"
+
+        if (time == "" || time == "#") {
+            msgErro += "Campo de Time \n"
+        } if (resultado == "" || resultado == "#") {
+            msgErro += "Campo de Resultado \n"
+        } if (pontos == "") {
+            msgErro += "Campo de Pontos \n"
+        } if (kills == "") {
+            msgErro += "Campo de Kills \n"
+        } if (mortes == "") {
+            msgErro += "Campo de Mortes \n"
+        }
+
+        if (msgErro != "Os seguintes campos estão vazios/inválidos: \n") {
+            alert(msgErro)
+            return;
+        } else {
+            alert("Inserção feita")
+        }
+
+        if (mapa == "") {
+            mapa = null;
+        }
+        
+        // Função para enviar os atributos via POST/Inserir no inserir(route) e função registrar
+        fetch("/inserir/registrar", {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          // crie atributos que recebem o valor recuperado aqui
+          // Agora vá para o arquivo routes/inserir.js
+          timeServer: time,
+          pontosServer: pontos,
+          mapaServer: mapa,
+          resultadoServer: resultado,
+          killsServer: kills,
+          deathsServer: mortes,
+      }),
+    })
+
+     .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+            // Se tudo der certo, mostra mensagem no html
+              cardErro.style.display = "block";
+
+              mensagem_erro.innerHTML =
+                "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+
+                // ativa função que leva pros gráficos em 2s
+              setTimeout(() => {
+                window.location = "dashboard.html";
+              }, "2000");
+
+            } else {
+              throw "Houve um erro ao tentar realizar o cadastro!";
+            }
+        })
+        .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+    }
 
         
 </script>
