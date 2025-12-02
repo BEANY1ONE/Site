@@ -6,12 +6,12 @@ var router = express.Router();
 var medidaController = require("../controllers/medidaController");
 
 // get/pega a função buscarUltimas de medidaController, requisitando e respondendo
-router.get("/ultimas/:idPartida", function (req, res) {
+router.get("/ultimas/:idUsuario", function (req, res) {
     medidaController.buscarUltimasMedidas(req, res);
 });
 
 // get/pega a função buscarMedidasTemporeal, requisitando e respondendo
-router.get("/tempo-real/:idPartida", function (req, res) {
+router.get("/tempo-real/:idUsuario", function (req, res) {
     medidaController.buscarMedidasEmTempoReal(req, res);
 })
 

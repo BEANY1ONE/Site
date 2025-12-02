@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="./../css/dashboards.css">
     <link rel="stylesheet" href="./../css/estilo.css" />
     <script src="../js/sessao.js"></script>
-    <script src="./../js/alerta.js"></script>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
@@ -45,12 +44,6 @@
             </div>
 
             <div class="btn-nav-white">
-                <a href="./cards.html">
-                    <h3>PARTIDAS</h3>
-                </a>
-            </div>
-
-            <div class="btn-nav-white">
                 <a href="./inserir.html">
                     <h3>INSERIR DADOS</h3>
                 </a>
@@ -65,8 +58,6 @@
         <div class="dash">
             <div id="banner-mapa">
                 <h1 id="banner-mapa-titulo">Oregon</h1>
-            </div>
-            <div id="alerta">
             </div>
             <div class="btns-dash" id="btnPartida">
                 <!-- O gráfico é chamado de acordo com o id (fk_aquario) do banco  -->
@@ -88,9 +79,11 @@
 
     // Define uma "variável" chamada proximaAtualizacao;
     let proximaAtualizacao;
+    var idUsuario = sessionStorage.ID_USUARIO;
+    let ultimoIdPartida = null;
  
     // Após a janela/página carregar, realiza a função exibirPartidasDoUsuario
-    window.onload = exibirPartidasDoUsuario();
+    window.onload = exibirPartidasDoUsuario;
 
     // Função pra exibir as partidas do usuário em si
     function exibirPartidasDoUsuario() {
@@ -110,9 +103,6 @@
                 <div id="grafico${item.idPartida}" class="display-none">
                     <div class="graph">
                         <canvas id="myChartCanvas${item.idPartida}"></canvas>
-                    </div>
-                    <div class="label-captura">
-                        <p id="avisoCaptura${item.idPartida}" style="color: white"></p>
                     </div>
                 </div>
             `
@@ -211,7 +201,7 @@
 
         // Vai buscar em rotas o arquivo ultimas(partidas) e pega pelo idPartida, 
         // define como sem cache e então, define a função resposta.
-        fetch(`/medidasPartidas/ultimas/${idPartida}`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/medidasPartidas/ultimas/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
             // Se response der certo, então pega a função resposta em formato json
             // e aparece no console.log os dados que receber do BD,
             // formatando em formato string e plotando os gráficos
@@ -256,21 +246,29 @@
             datasets: [{
                 label: 'Kills',
                 data: [],
-                fill: true,
+                fill: false,
                 backgroundColor: 'black',
                 borderColor: 'black',
-                barPercentage: '0.5',
-                padding: '20',
+                borderWidth: 3,
                 tension: 0.1
             },
             {
                 label: 'Deaths',
                 data: [],
-                fill: true,
+                fill: false,
                 backgroundColor: '#D9A303',
-                borderColor: 'black',
-                barPercentage: '0.5',
+                borderColor: '#D9A303',
+                borderWidth: 3,
                 tension: 0.1
+            },
+            {
+                label: 'KD',
+                data: [],
+                fill: false,
+                backgroundColor: 'green',
+                borderColor: 'green',
+                borderWidth: 3,
+                tension: 0.05
             }]
         };
 
@@ -283,11 +281,12 @@
         for (i = 0; i < resposta.length; i++) {
             // Variável registro é a resposta[contador]
             var registro = resposta[i];
-            // Envia na label o momento do gráfico
-            labels.push(registro.momento);
+            // Envia na label o idPartida do gráfico, sendo o título
+            labels.push(`Partida: ${registro.idPartida}`);
             // Aqui pega os dados de kills e deaths
             dados.datasets[0].data.push(registro.kills);
             dados.datasets[1].data.push(registro.deaths);
+            dados.datasets[2].data.push(registro.kd);
         }
 
         console.log('----------------------------------------------')
@@ -301,17 +300,33 @@
         // Criando estrutura para plotar gráfico - config
         // Define o tipo de gráfico e os dados que serão exibidos
         const config = {
-            type: 'bar',
+            type: 'line',
             data: dados,
             options: {
-                layout: {
-                    padding: {
-                        top: 20,
-                        bottom: 0,
-                        left: 0,
-                        right: 0
+                scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Kills / KD / Deaths',
+                        color: '#D9A303',
+                        font: {
+                            weight: 'bold',
+                            size: 16,
+                            family: 'Oswald'
+                        }
+                    },
+                    min: 0,
+                    max: 20,
+                    ticks: {
+                        stepSize: 2
+                    },
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.300)',
+                        borderColor: 'red',
+                        borderWidth: 2
                     }
                 }
+            }
             }
         };
 
@@ -335,50 +350,46 @@
 
 
         // Busca em medidasPartidas.routes a função de tempo-real pra atualizar o gráfico
-        fetch(`/medidasPartidas/tempo-real/${idPartida}`, { cache: 'no-store' }).then(function (response) {
+        fetch(`/medidasPartidas/tempo-real/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
             // Se a função der certo:
             if (response.ok) {
                 // então chama função novoRegistro
                 response.json().then(function (novoRegistro) {
 
                     // obtemDados a partir do idPartida
-                    obterdados(idPartida);
                     // alertar(novoRegistro, idPartida);
                     // Mostra no console os ddos recebidos e os atuais
                     console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
                     console.log(`Dados atuais do gráfico:`);
                     console.log(dados);
 
-                    // Define "var" do aviso de captura 
-                    let avisoCaptura = document.getElementById(`avisoCaptura${idPartida}`)
-                    avisoCaptura.innerHTML = ""
-
 
                     // Se o novoRegistro do gráfico(no caso o último tamanho) for igual ao
-                    // tamanho de dados (tipo, imagina ter 4 registros e o momento gráfico for 4)
+                    // tamanho de dados (tipo, imagina ter 4 registros e o idPartida gráfico for 4)
                     // Ele vai entender que não adiconou novo registro
-                    if (novoRegistro[0].momento_grafico == dados.labels[dados.labels.length - 1]) {
+                    let ultimoLabel = dados.labels[dados.labels.length - 1].replace("Partida: ", "");
+                    if (novoRegistro[0].idPartida == ultimoLabel) {
                         // Vai mostrar no console uma frase enorme e um aviso na página
                         console.log("---------------------------------------------------------------")
                         console.log("Como não há dados novos para captura, o gráfico não atualizará.")
-                        avisoCaptura.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Foi trazido o dado mais atual capturado pelo sensor. <br> Como não há dados novos a exibir, o gráfico não atualizará."
-                        console.log("Horário do novo dado capturado:")
-                        console.log(novoRegistro[0].momento_grafico)
-                        console.log("Horário do último dado capturado:")
-                        console.log(dados.labels[dados.labels.length - 1])
+                        console.log("ID do dado atual capturado:")
+                        console.log(novoRegistro[0].idPartida)
                         console.log("---------------------------------------------------------------")
                     } else {
                         // Agora se tiver dado novo...
                         // tirando e colocando valores no gráfico
                         dados.labels.shift(); // apagar o primeiro (shift apaga o primeiro dado
                         // exibido no Gráfico do Chart.js)
-                        dados.labels.push(novoRegistro[0].momento_grafico); // incluir um novo momento no gráfico
+                        dados.labels.push(`Partida: ${novoRegistro[0].idPartida}`); // incluir um novo idPartida no gráfico
 
                         dados.datasets[0].data.shift();  // apagar o primeiro dado de kills
                         dados.datasets[0].data.push(novoRegistro[0].kills); // incluir uma nova medida de kills
 
                         dados.datasets[1].data.shift();  // apagar o primeiro de deaths
                         dados.datasets[1].data.push(novoRegistro[0].deaths); // incluir uma nova medida de deaths
+
+                        dados.datasets[2].data.shift();  // apagar o primeiro de kd
+                        dados.datasets[2].data.push(novoRegistro[0].kd); // incluir uma nova medida de kd
 
                         // serve pra atualizar o gráfico do chart.js
                         myChart.update();

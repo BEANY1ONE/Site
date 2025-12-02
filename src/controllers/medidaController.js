@@ -5,16 +5,16 @@ var medidaModel = require("../models/medidaModel");
 function buscarUltimasMedidas(req, res) {
 
     // Define o limite de linhas/registros do gráfico
-    const limite_linhas = 8;
+    const limite_linhas = 6;
 
-    // Define a variável idPartida, requisitando o paramêtro
-    var idPartida = req.params.idPartida; 
+    // Define a variável idUsuario, requisitando o paramêtro
+    const idUsuario = req.params.idUsuario;
 
     // Mostra o limite de dados no gráfico
-    console.log(`Recuperando as ultimas ${limite_linhas} medidas`);
+    console.log(`Recuperando as ultimas ${limite_linhas} medidas da partida ${idUsuario}`);
 
-    // Utiliza a função do MySQL e busca o idPartida(do mySQL) e então faz a função resultado
-    medidaModel.buscarUltimasMedidas(idPartida, limite_linhas).then(function (resultado) {
+    // Utiliza a função do MySQL e busca o idUsuario(do mySQL) e então faz a função resultado
+    medidaModel.buscarUltimasMedidas(idUsuario, limite_linhas).then(function (resultado) { 
         // Se encontrar resultados, define como resposta o json exibido, se não, envia "Nenhum
         // resultado encontrado" como response
         if (resultado.length > 0) {
@@ -34,14 +34,14 @@ function buscarUltimasMedidas(req, res) {
 function buscarMedidasEmTempoReal(req, res) {
 
     // Define a variável idPartida que requer parametros idPartida do medidaModels.js
-    var idPartida = req.params.idPartida;
+    var idUsuario = req.params.idUsuario;
 
     // Mostra no console que vai recuperar as medidas
     console.log(`Recuperando medidas em tempo real`);
 
     // Busca o idPartida dentro da função SQL medidaModel, onde então, realiza função resultado
-    medidaModel.buscarMedidasEmTempoReal(idPartida).then(function (resultado) {
-        // Se encontrar um resultado de idPartida, responde com resultado que pega em forma json
+    medidaModel.buscarMedidasEmTempoReal(idUsuario).then(function (resultado) {
+        // Se encontrar um resultado de idUsuario, responde com resultado que pega em forma json
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else { // Se não, apenas responde que não encontrou nada
