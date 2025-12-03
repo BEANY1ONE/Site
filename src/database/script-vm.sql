@@ -19,21 +19,21 @@ grant all privileges on beany1.*
 
 flush privileges;
 
--- retirar as permissões
-revoke all privileges on beany1.* 
-	from 'beanyone'@'localhost';
+-- -- retirar as permissões
+-- revoke all privileges on beany1.* 
+-- 	from 'beanyone'@'localhost';
     
-flush privileges;
+-- flush privileges;
 
--- permitir apenas o select
-grant SELECT on sptecha.* 
-	to 'beanyone'@'localhost';
+-- -- permitir apenas o select
+-- grant SELECT on sptecha.* 
+-- 	to 'beanyone'@'localhost';
 
 -- grant SELECT, UPDATE, DELETE, INSERT on sptecha.* 
 -- to 'beanyone'@'localhost';
     
 -- confirmar as permissões
-flush privileges;
+-- flush privileges;
 
 -- excluir o usuário
 -- drop user 'beanyone'@'localhost';
