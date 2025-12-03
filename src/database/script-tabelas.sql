@@ -91,7 +91,7 @@ CREATE TABLE conta ( -- Informações da conta
 	ranks VARCHAR(15),
 		CONSTRAINT chkRanks CHECK (ranks IN('Cobre', 'Bronze', 'Prata', 'Ouro', 'Platina', 'Diamante', 'Champion')),
 	kd DECIMAL DEFAULT 0,
-	dtConta DATE DEFAULT NOW(),
+	dtConta DATE DEFAULT (CURRENT_DATE),
 	nvlConta INT
 );
 
@@ -108,7 +108,7 @@ CREATE TABLE partidaUsuario (
 		CONSTRAINT fkUsuarioPartida FOREIGN KEY (fkUsuario) REFERENCES usuario(idUsuario),
 		CONSTRAINT fkEquipePartida FOREIGN KEY (fkEquipe) REFERENCES equipe(idEquipe),
 		PRIMARY KEY (idPartida, fkUsuario, fkEquipe),
-	dtPartida DATE DEFAULT NOW() NOT NULL,
+	dtPartida DATE DEFAULT (CURRENT_DATE) NOT NULL,
 	mapa VARCHAR(45) DEFAULT 'Mapa Indefinido',
 	resultado VARCHAR(45) NOT NULL,
 		CONSTRAINT chkResultado CHECK (resultado IN('Vitória', 'Derrota')),
