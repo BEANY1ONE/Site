@@ -77,6 +77,21 @@
 </html>
 
 <script>
+    // =============================================================================================
+    // _____________________________________________________________________________________________
+    // O gráfico é construído com três funções:
+    // 1. obterDadosGrafico -> Traz dados do Banco de Dados para montar o gráfico da primeira vez
+    // 2. plotarGrafico -> Monta o gráfico com os dados trazidos e exibe em tela
+    // 3. atualizarGrafico -> Atualiza o gráfico, trazendo novamente dados do Banco
+
+    // Esta função *obterDadosGrafico* busca os últimos dados inseridos em tabela de partidas.
+    // para, quando carregar o gráfico da primeira vez, já trazer com vários dados.
+    // A função *obterDadosGrafico* também invoca a função *plotarGrafico*
+
+    //     Se quiser alterar a busca, ajuste as regras de negócio em src/controllers
+    //     Para ajustar o "select", ajuste o comando sql em src/models
+    // _____________________________________________________________________________________________
+    // =============================================================================================
     // Abaixo, busca o NOME_USUARIO salvo no sessionStorage(salvo no histórico da sessão)
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 
@@ -94,9 +109,7 @@
         var partidas = JSON.parse(sessionStorage.PARTIDAS);
         // Abaixo, pega cada partida e define pra aparecer e exibir o botão
         partidas.forEach(item => {
-            document.getElementById("btnPartida").innerHTML += `
-            <button class="btn-chart" onclick="exibirPartidas(${item.idPartida})" id="btnPartida${item.idPartida}">${item.mapa}</button>
-            `
+
 
             // Abaixo define pra aparecer na div.idGraficos as seguintes configs:
             // Titulo como mapa
@@ -151,26 +164,19 @@
         // Define cont como 0, e enquanto o total de gráficos for maior que o contador, faz a função
         for (i = 0; i < todosOsGraficos.length; i++) {
             // exibindo (ou não) o gráfico
-            if (todosOsGraficos[i].idPartida != idPartida) {
-                // Define "var" como elemento atual, onde irá no elemento que estava com display none
-                // Acima e pega o id do gráfico
-                let elementoAtual = document.getElementById(`grafico${todosOsGraficos[i].idPartida}`)
-                // Se conter display block, irá remover logo após.
-                if (elementoAtual.classList.contains("display-block")) {
-                    elementoAtual.classList.remove("display-block")
-                }
-                // Define o elemento atual como display none
-                elementoAtual.classList.add("display-none")
+            // if (todosOsGraficos[i].idPartida != idPartida) {
+            //     // Define "var" como elemento atual, onde irá no elemento que estava com display none
+            //     // Acima e pega o id do gráfico
+            //     let elementoAtual = document.getElementById(`grafico${todosOsGraficos[i].idPartida}`)
+            //     // Se conter display block, irá remover logo após.
+            //     if (elementoAtual.classList.contains("display-block")) {
+            //         elementoAtual.classList.remove("display-block")
+            //     }
+            //     // Define o elemento atual como display none
+            //     elementoAtual.classList.add("display-none")
 
-                // Alterando estilo do botão, definindo a "var" como gráfico
-                let btnAtual = document.getElementById(`btnPartida${todosOsGraficos[i].idPartida}`)
-                // Se conter botão de classe pink, remove.
-                if (btnAtual.classList.contains("btn-pink")) {
-                    btnAtual.classList.remove("btn-pink")
-                }
-                // Define botão como estilo/classe branco
-                btnAtual.classList.add("btn-white");
-            }
+
+            // }
         }
 
         // exibindo - ou não - o gráfico
@@ -184,9 +190,9 @@
         // Alterando estilo do botão
         let btnExibir = document.getElementById(`btnPartida${idPartida}`)
         // Remove estilo branco
-        btnExibir.classList.remove("btn-white")
+        // btnExibir.classList.remove("btn-white")
         // Coloca estilo rosa no botão
-        btnExibir.classList.add("btn-pink")
+        // btnExibir.classList.add("btn-pink")
     }
 
     // O gráfico é construído com três funções:
@@ -291,7 +297,7 @@
         };
 
         // Aqui exibe no console que os dados foram recebidos pela função obter e foram passados pro plotar.
-        console.log('----------------------------------------------')
+        console.log('===============================================')
         console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
         console.log(resposta)
 
@@ -307,13 +313,13 @@
             dados.datasets[2].data.push(registro.kd);
         }
 
-        console.log('----------------------------------------------')
+        console.log('===============================================')
         console.log('O gráfico será plotado com os respectivos valores:')
         console.log('Labels:')
         console.log(labels)
         console.log('Dados:')
         console.log(dados.datasets)
-        console.log('----------------------------------------------')
+        console.log('===============================================')
 
         // Criando estrutura para plotar gráfico - config
         // Define o tipo de gráfico e os dados que serão exibidos

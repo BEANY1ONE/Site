@@ -77,8 +77,8 @@
                         <h4>Resultado:</h4>
                         <select required name="selecionar" id="select_resultado">
                             <option disabled selected value="#">Selecione um Resultado</option>
-                            <option value="vitoria">Vitória</option>
-                            <option value="derrota">Derrota</option>
+                            <option value="Vitória">Vitória</option>
+                            <option value="Derrota">Derrota</option>
                         </select>
                         <h4>Mortes:</h4>
                         <input required id="ipt_mortes" placeholder="Insira a Qtd de Mortes aqui" type="number">
@@ -95,9 +95,10 @@
 
 <script>
     b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+    let idUsuario = Number(sessionStorage.ID_USUARIO);
 
     function inserirDados() {
-        var time = select_time.value;
+        var time = Number(select_time.value);
         var mapa = ipt_mapa.value;
         var resultado = select_resultado.value;
         var pontos = Number(ipt_pontos.value);
@@ -126,11 +127,11 @@
         }
 
         if (mapa == "") {
-            mapa = null;
+            mapa = undefined;
         }
         
         // Função para enviar os atributos via POST/Inserir no inserir(route) e função registrar
-        fetch("/inserir/registrar", {
+        fetch(`/inserir/registrar/${idUsuario}`, {
         method: "POST",
         headers: {
         "Content-Type": "application/json",
@@ -144,18 +145,19 @@
           resultadoServer: resultado,
           killsServer: kills,
           deathsServer: mortes,
+          idUsuarioServer: idUsuario,
       }),
     })
-
+    // Devolve a resposta
      .then(function (resposta) {
         console.log("resposta: ", resposta);
 
             if (resposta.ok) {
             // Se tudo der certo, mostra mensagem no html
-              cardErro.style.display = "block";
+            //   cardErro.style.display = "block";
 
-              mensagem_erro.innerHTML =
-                "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+               
+                alert("Cadastro realizado com sucesso! Redirecionando para tela de Login...");
 
                 // ativa função que leva pros gráficos em 2s
               setTimeout(() => {
@@ -163,7 +165,7 @@
               }, "2000");
 
             } else {
-              throw "Houve um erro ao tentar realizar o cadastro!";
+              throw "Houve um erro ao tentar realizar a inserção!";
             }
         })
         .catch(function (resposta) {
