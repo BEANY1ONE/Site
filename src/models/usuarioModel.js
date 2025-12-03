@@ -19,7 +19,19 @@ function cadastrar(username, email, senha) {
         INSERT INTO usuario (username, email, senha) VALUES ('${username}', '${email}', '${senha}');
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql)
+        .then(resultado1 => {
+
+        var idUsuario = resultado1.insertId;
+
+        var instrucaoSql2 = `
+            INSERT INTO partidaUsuario (fkUsuario, fkEquipe, resultado, kills, deaths) 
+            VALUES (${idUsuario}, 1, 'Vitória', 0, 0);
+            `;
+
+            console.log("Executando a segunda instrução SQL: \n" + instrucaoSql2);
+            return database.executar(instrucaoSql2);
+    });
 }
 
 module.exports = {
